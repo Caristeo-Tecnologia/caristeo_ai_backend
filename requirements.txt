@@ -1,0 +1,12 @@
+boto3
+langchain-aws
+loguru
+numpy
+pillow
+pydantic
+pydantic-ai-slim[bedrock]
+pydantic-ai-slim[mistral]
+pypdf
+pypdfium2
+streamlit
+tqdm

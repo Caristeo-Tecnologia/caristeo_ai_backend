@@ -7,7 +7,7 @@ from pydantic_ai.models.bedrock import BedrockConverseModel
 from pydantic_ai.providers.bedrock import BedrockProvider
 
 # import stricy string type from pydantic
-from src.core.config import boto3_params
+# from src.core.config import boto3_params
 
 
 class BedrockAgent:
@@ -15,6 +15,7 @@ class BedrockAgent:
         self,
         model_name: str = "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
         result_type: Optional[Union[Type[BaseModel], Type[str]]] = str,
+        boto3_params: Optional[Dict[str, str]] = None,
     ):
         self.model_name = model_name
         self.result_type = result_type

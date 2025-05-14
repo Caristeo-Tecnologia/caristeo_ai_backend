@@ -94,7 +94,7 @@ if (
     })
 
 client = boto3.client("bedrock-agent-runtime", **current_boto3_params)
-bedrock = BedrockAgent()
+bedrock = BedrockAgent(boto3_params=current_boto3_params)
 
 
 # Function to process retrieval and generate response

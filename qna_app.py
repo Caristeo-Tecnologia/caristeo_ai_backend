@@ -21,9 +21,7 @@ if "aws_credentials" not in st.session_state:
     st.session_state.aws_credentials = {
         "AWS_ACCESS_KEY_ID": os.environ.get("AWS_ACCESS_KEY_ID", ""),
         "AWS_SECRET_ACCESS_KEY": os.environ.get("AWS_SECRET_ACCESS_KEY", ""),
-        "AWS_REGION": os.environ.get(
-            "AWS_REGION", boto3_params.get("region_name", "us-east-1")
-        ),
+        "AWS_REGION": os.environ.get("AWS_REGION", "us-east-1"),
     }
 
 # AWS Credentials Configuration in Sidebar
@@ -45,27 +43,24 @@ with st.sidebar:
         type="password",
     )
 
-    aws_region = st.text_input(
-        "AWS Region", value=st.session_state.aws_credentials["AWS_REGION"]
-    )
-
     if st.button("Update AWS Credentials"):
         st.session_state.aws_credentials = {
             "AWS_ACCESS_KEY_ID": aws_access_key,
             "AWS_SECRET_ACCESS_KEY": aws_secret_key,
-            "AWS_REGION": aws_region,
+            # Always use default region
+            "AWS_REGION": "us-east-1",
         }
         st.success("AWS credentials updated!")
         # Set environment variables
         os.environ["AWS_ACCESS_KEY_ID"] = aws_access_key
         os.environ["AWS_SECRET_ACCESS_KEY"] = aws_secret_key
-        os.environ["AWS_REGION"] = aws_region
+        os.environ["AWS_REGION"] = "us-east-1"
         st.rerun()  # Rerun the app to apply changes
 
     if st.button("Export Credentials as .env File"):
         env_content = f"""AWS_ACCESS_KEY_ID={st.session_state.aws_credentials["AWS_ACCESS_KEY_ID"]}
 AWS_SECRET_ACCESS_KEY={st.session_state.aws_credentials["AWS_SECRET_ACCESS_KEY"]}
-AWS_REGION={st.session_state.aws_credentials["AWS_REGION"]}
+AWS_REGION=us-east-1
 """
         st.download_button(
             label="Download .env File",

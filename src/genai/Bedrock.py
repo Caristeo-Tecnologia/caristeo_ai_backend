@@ -1,4 +1,4 @@
-from typing import Dict, Optional, Type, Union
+from typing import Dict, List, Optional, Type, Union
 
 import boto3
 from pydantic import BaseModel
@@ -36,7 +36,7 @@ class BedrockAgent:
         agent: Agent,
         model_settings: Dict[str, Union[float, int]] = None,
         invoke_params: Dict[str, str] = None,
-        image_content: Optional[bytes] = None,
+        image_content: Optional[Union[bytes, List[bytes]]] = None,
         image_media_type: str = "image/jpeg",
     ) -> str:
         if invoke_params:
@@ -50,9 +50,15 @@ class BedrockAgent:
 
         # Add image if provided
         if image_content:
-            message_content.append(
-                BinaryContent(data=image_content, media_type=image_media_type)
-            )
+            if isinstance(image_content, bytes):
+                image_content = [image_content]
+            for image in image_content:
+                message_content.append(
+                    BinaryContent(
+                        data=image,
+                        media_type=image_media_type,
+                    )
+                )
 
         # Run the agent with the content
         response = agent.run_sync(

@@ -1,4 +1,4 @@
-from typing import Dict, Optional, Union
+from typing import Dict, Optional, Type, Union
 
 from mistralai import Mistral
 from pydantic import BaseModel
@@ -12,8 +12,8 @@ from src.core.config import AllowedLLM, settings
 class MistralAgent:
     def __init__(
         self,
-        model_name: str = AllowedLLM.MISTRAL_PIXTRAL_12B_2409.value,
-        result_type: Optional[BaseModel] = None,
+        model_name: str = AllowedLLM.MISTRAL_SMALL.value,
+        result_type: Optional[Union[Type[BaseModel], Type[str]]] = str,
     ):
         self.model_name = model_name
         self.result_type = result_type

@@ -1,7 +1,6 @@
 import json
 
 import boto3
-import yaml
 from botocore.errorfactory import ClientError
 
 from src.core.config import boto3_params
@@ -12,10 +11,34 @@ class S3:
         self.client = boto3.client("s3", **boto3_params)
 
     def put_object(self, bucket_name: str, file_key: str, file_bytes: bytes) -> dict:
+        """Coloca um objeto no S3
+
+        Args:
+            bucket_name (str): Nome do bucket
+            file_key (str): Caminho do objeto no bucket
+            file_bytes (bytes): Conteúdo do objeto
+
+        Returns:
+            dict: Resposta da operação
+        """
         response = self.client.put_object(
             Bucket=bucket_name,
             Key=file_key,
             Body=file_bytes,
+        )
+        return response
+
+    def upload_fileobj(self, bucket_name: str, file_key: str, fileobj) -> dict:
+        """Faz o upload de um objeto para o S3
+
+        Args:
+            bucket_name (str): Nome do bucket
+            file_key (str): Caminho do objeto no bucket
+            fileobj (_type_): Objeto a ser enviado
+        """
+        # boto3.upload_fileobj returns None or raises on error
+        response = self.client.upload_fileobj(
+            Fileobj=fileobj, Bucket=bucket_name, Key=file_key
         )
         return response
 
@@ -67,8 +90,6 @@ class S3:
             return json.loads(file_content)
         elif file_extension in ["txt", "md"]:
             return file_content
-        elif file_extension in ["yml", "yaml"]:
-            return yaml.safe_load(file_content)
         else:
             raise ValueError("Unsupported file format")
 

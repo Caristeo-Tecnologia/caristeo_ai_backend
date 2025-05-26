@@ -35,6 +35,7 @@ class AllowedLLM(Enum):
         "us.anthropic.claude-3-7-sonnet-20250219-v1:0".lower()
     )
     MISTRAL_PIXTRAL_12B_2409 = "pixtral-12b-2409".lower()
+    MISTRAL_SMALL = "mistral-small-latest".lower()
 
 
 settings = Settings()

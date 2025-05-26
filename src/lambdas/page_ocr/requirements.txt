@@ -1,0 +1,4 @@
+pydantic-ai-slim[bedrock]
+pydantic
+pyyaml
+loguru

@@ -286,6 +286,8 @@ override.tf.json
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
 
+plan.out
+
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
@@ -303,3 +305,5 @@ pyvenv.cfg
 pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/venv,python,terraform,jupyternotebooks,images
+
+books/
